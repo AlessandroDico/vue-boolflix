@@ -5,6 +5,32 @@ var app = new Vue ({
         allMovies: [],
         isLoading: false,
         numberStars: 5,
+        images: [
+            {
+                lang:'en',
+                flag: 'images/uk.jpg',
+            },
+            {
+                lang:'de',
+                flag: 'images/germany.jpg',
+            },
+            {
+                lang:'it',
+                flag: 'images/italy.jpg',
+            },
+            {
+                lang:'es',
+                flag: 'images/spain.jpg',
+            },
+            {
+                lang:'fr',
+                flag: 'images/france.jpg',
+            },
+            {
+                lang:'Ja',
+                flag: 'images/japan.jpg',
+            },
+        ]
     },
     methods: {
         getMovies(){

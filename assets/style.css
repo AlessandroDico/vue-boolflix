@@ -72,9 +72,18 @@ body {
     margin: 0 5px;
 }
 
+/* INIZIO STILIZZAZIONE BANDIERINE */
 
+li.flags {
+    height: 50px;
+    width: 50px;
+    margin: auto;
+}
 
-
+.flags > img {
+    height: 100%;
+    width: 100%;
+}
 
 
 

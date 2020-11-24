@@ -27,8 +27,8 @@
                     <li>
                         {{movie.original_title}}
                     </li>
-                    <li>
-                        {{movie.original_language}}
+                    <li v-for="(image, i) in images" class="flags" v-if="movie.original_language == images[i].lang">
+                        <img :src="image.flag" alt="image.flag">
                     </li>
                     <li v-for="(item, index) in numberStars"
                         class="align-self">
