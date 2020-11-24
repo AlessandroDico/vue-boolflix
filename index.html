@@ -30,9 +30,6 @@
                     <li>
                         {{movie.original_language}}
                     </li>
-                    <li>
-                        {{movie.vote_average}}
-                    </li>
                     <li v-for="(item, index) in numberStars"
                         class="align-self">
                         <i class="far fa-star" :class="item <= movie.vote_average? 'fas' : 'far'"></i>
