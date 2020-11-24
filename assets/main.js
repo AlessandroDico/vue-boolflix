@@ -4,8 +4,7 @@ var app = new Vue ({
         searchMovies: '',
         allMovies: [],
         isLoading: false,
-        starClass: 'fas',
-        array: [],
+        numberStars: 5,
     },
     methods: {
         getMovies(){
@@ -26,10 +25,6 @@ var app = new Vue ({
                 item.vote_average = Math.round(item.vote_average / 2);
                 console.log(item.vote_average);
 
-                // for (var i = 0; i < item.vote_average; i++) {
-                //     // this.starClass = 'fas';
-                //     this.array.push('fas');
-                // }
                 });
             })
         },

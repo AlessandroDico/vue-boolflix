@@ -33,9 +33,9 @@
                     <li>
                         {{movie.vote_average}}
                     </li>
-                    <li v-for="(item, index) in movie.vote_average"
+                    <li v-for="(item, index) in numberStars"
                         class="align-self">
-                        <i class="far fa-star" :class="starClass"></i>
+                        <i class="far fa-star" :class="item <= movie.vote_average? 'fas' : 'far'"></i>
                     </li>
                 </ul>
             </div>
