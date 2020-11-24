@@ -14,21 +14,23 @@
 
         <div id="root">
             <div class="search-bar">
-                <input type="text" v-model="searchMovies" @keyup.enter="getMovies()"
+                <input type="text" v-model="searchMovies" @keyup.enter="getMovies(); getSeries();"
                     placeholder="cerca un film">
-                <button type="button" @click="getMovies()">Search</button>
+                <button type="button" @click="getMovies(); getSeries();">Search</button>
             </div>
             <div class="movies-container">
                 <ul v-for="movie in allMovies" v-if="isLoading == true"
                     class="movie-card">
                     <li>
                         {{movie.title}}
+                        {{movie.name}}
                     </li>
                     <li>
                         {{movie.original_title}}
+                        {{movie.original_name}}
                     </li>
-                    <li v-for="(image, i) in images" class="flags" v-if="movie.original_language == images[i].lang">
-                        <img :src="image.flag" alt="image.flag">
+                    <li v-for="(image, i) in images" class="flags-container" v-if="movie.original_language == images[i].lang">
+                        <img :src="image.flag" alt="movie.original_language">
                     </li>
                     <li v-for="(item, index) in numberStars"
                         class="align-self">

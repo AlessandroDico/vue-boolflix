@@ -74,13 +74,13 @@ body {
 
 /* INIZIO STILIZZAZIONE BANDIERINE */
 
-li.flags {
+li.flags-container {
     height: 50px;
     width: 50px;
     margin: auto;
 }
 
-.flags > img {
+.flags-container > img {
     height: 100%;
     width: 100%;
 }
