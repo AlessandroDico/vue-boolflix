@@ -11,6 +11,7 @@ var app = new Vue ({
                 params:{
                     api_key: '5a579e747faf09425e97ffffa6a21111',
                     query: this.searchMovies,
+                    language: 'it',
                 }
             })
             .then((element) =>{
