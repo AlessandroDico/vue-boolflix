@@ -13,7 +13,28 @@
     <body>
 
         <div id="root">
-
+            <div class="search-bar">
+                <input type="text" v-model="searchMovies" @keyup.enter="getMovies()"
+                    placeholder="cerca un film">
+                <button type="button" @click="getMovies()">Search</button>
+            </div>
+            <div class="movies-container">
+                <ul v-for="movie in allMovies" v-if="isLoading == true"
+                    class="movie-card">
+                    <li>
+                        {{movie.title}}
+                    </li>
+                    <li>
+                        {{movie.original_title}}
+                    </li>
+                    <li>
+                        {{movie.original_language}}
+                    </li>
+                    <li>
+                        {{movie.vote_average}}
+                    </li>
+                </ul>
+            </div>
         </div>
 
 
