@@ -18,8 +18,14 @@ var app = new Vue ({
                 this.allMovies = element.data.results;
                 console.log(this.allMovies);
                 this.isLoading = true;
+
+                this.allMovies.forEach((item) => {
+                item.vote_average = Math.round(item.vote_average / 2);
+                console.log(item.vote_average);
+                });
             })
         },
+
     },
     mounted(){
         console.log('hello');
