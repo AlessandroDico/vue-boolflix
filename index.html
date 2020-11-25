@@ -13,11 +13,17 @@
     <body>
 
         <div id="root">
-            <div class="search-bar">
-                <input type="text" v-model="searchMovies" @keyup.enter="getMovies(); getSeries();"
+            <header>
+                <div class="logo-container">
+                    <!-- <img src="" alt=""> -->
+                    <p>BOOLFLIX</p>
+                </div>
+                <div class="search-bar">
+                    <input type="text" v-model="searchMovies" @keyup.enter="getMovies()"
                     placeholder="cerca un film">
-                <button type="button" @click="getMovies(); getSeries();">Search</button>
-            </div>
+                    <button type="button" @click="getMovies()">Search</button>
+                </div>
+            </header>
             <div class="movies-container">
                 <ul v-for="movie in allMovies" v-if="isLoading == true"
                     class="movie-card">
@@ -29,9 +35,14 @@
                         {{movie.original_title}}
                         {{movie.original_name}}
                     </li>
-                    <li v-for="(image, i) in images" class="flags-container" v-if="movie.original_language == images[i].lang">
-                        <img :src="image.flag" alt="movie.original_language">
+                    <li class="flags-container" v-if="languages.includes(movie.original_language)">
+                        <img :src="'images/' + movie.original_language + '.jpg'" alt="movie.original_language">
                     </li>
+                    <li v-else class="flags-container">
+                        {{movie.original_language}}
+                    </li>
+
+
                     <li v-for="(item, index) in numberStars"
                         class="align-self">
                         <i class="far fa-star" :class="item <= movie.vote_average? 'fas' : 'far'"></i>
