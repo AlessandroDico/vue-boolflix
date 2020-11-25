@@ -27,7 +27,7 @@
 
 <!-- _______TITOLI/ISTRUZIONI PER L'UTENTE______ -->
             <div class="search-state">
-                <h3 v-if="isLoad == false && isWaiting == false">cerca il tuo film preferito</h3>
+                <h3 v-if="isLoad == false && isWaiting == false">cosa vuoi vedere oggi?</h3>
                 <h2 v-if="isLoad == true && isWaiting == false">{{ allMovies.length }} Risultati per la ricerca "{{searchResoluts}}"</h2>
 
                 <h2 v-if="isWaiting == true">Sto cercando..</h2>
