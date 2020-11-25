@@ -42,15 +42,15 @@ var app = new Vue ({
                         },
                     })
                 ])
-                .then(axios.spread((prima, seconda) => {
-                    console.log(prima.data);
-                    console.log(seconda.data);
+                .then(axios.spread((film_el, series_el) => {
+                    // console.log(film_el.data);
+                    // console.log(series_el.data);
 
-                    this.movies = prima.data.results;
-                    this.series = seconda.data.results;
+                    this.movies = film_el.data.results;
+                    this.series = series_el.data.results;
 
-                    console.log(this.movies);
-                    console.log(this.series);
+                    // console.log(this.movies);
+                    // console.log(this.series);
 
                     this.allMovies = [...this.series, ...this.movies]; //new
                     console.log(this.allMovies);
@@ -61,7 +61,8 @@ var app = new Vue ({
 
                     this.searchMovies = '';
 
-                    this.movies.forEach((item) => {
+                    this.allMovies.forEach((item) => {
+                        console.log(item.vote_average);
                         item.vote_average = Math.ceil(item.vote_average / 2);
                     });
 
