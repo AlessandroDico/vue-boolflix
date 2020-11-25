@@ -14,29 +14,6 @@ var app = new Vue ({
             'ja',
             'pt'
         ],
-        flags: [
-            {
-                flag: 'images/en.jpg',
-            },
-            {
-                flag: 'images/de.jpg',
-            },
-            {
-                flag: 'images/it.jpg',
-            },
-            {
-                flag: 'images/es.jpg',
-            },
-            {
-                flag: 'images/fr.jpg',
-            },
-            {
-                flag: 'images/ja.jpg',
-            },
-            {
-                flag: 'images/pt.jpg',
-            },
-        ]
     },
     methods: {
         getMovies(){
@@ -56,7 +33,7 @@ var app = new Vue ({
                 this.searchMovies = '';
 
                 this.allMovies.forEach((item) => {
-                item.vote_average = Math.round(item.vote_average / 2);
+                item.vote_average = Math.ceil(item.vote_average / 2);
                 });
 
             })
@@ -80,7 +57,7 @@ var app = new Vue ({
         //
         //
         //         this.allMovies.forEach((item) => {
-        //         item.vote_average = Math.round(item.vote_average / 2);
+        //         item.vote_average = Math.ceil(item.vote_average / 2);
         //         // console.log(item.vote_average);
         //
         //         });
