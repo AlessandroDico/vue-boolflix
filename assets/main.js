@@ -2,9 +2,10 @@ var app = new Vue ({
     el:'#root',
     data: {
         searchMovies: '',
+        searchResoluts: '',
         allMovies: [],
-        isLoading: false,
-        numberStars: 5,
+        isLoad: false,
+        numberStars: 5, //numero stelline voto
         languages: [
             'en',
             'de',
@@ -14,54 +15,68 @@ var app = new Vue ({
             'ja',
             'pt'
         ],
+        isWaiting: false,
     },
     methods: {
+// FUNZIONE PER FARE CHIAMATA AJAX
         getMovies(){
-            axios.get('https://api.themoviedb.org/3/search/movie', {
-                params: {
-                    api_key: '5a579e747faf09425e97ffffa6a21111',
-                    query: this.searchMovies,
-                    language: 'it',
-                }
-            })
-            .then((element) =>{
-                console.log(element);
-                this.allMovies = element.data.results;
-                console.log(this.allMovies);
-                this.isLoading = true;
 
-                this.searchMovies = '';
 
-                this.allMovies.forEach((item) => {
-                item.vote_average = Math.ceil(item.vote_average / 2);
-                });
+            if (this.searchMovies.trim()) {
+                this.isWaiting = true;
+                axios.get('https://api.themoviedb.org/3/search/movie', {
+                    params: {
+                        api_key: '5a579e747faf09425e97ffffa6a21111',
+                        query: this.searchMovies,
+                        language: 'it',
+                    },
+                })
+                .then((element) =>{
+                    console.log(element);
+                    this.allMovies = element.data.results;
+                    console.log(this.allMovies);
+                    this.isLoad = true;
 
-            })
+                    this.searchResoluts = this.searchMovies;
+
+                    this.searchMovies = '';
+
+                    this.allMovies.forEach((item) => {
+                        item.vote_average = Math.ceil(item.vote_average / 2);
+                    });
+
+                    this.isWaiting = false;
+                })
+
+
+            }
         },
         // getSeries(){
-        //     axios.get('https://api.themoviedb.org/3/search/tv', {
-        //         params: {
-        //             api_key: '5a579e747faf09425e97ffffa6a21111',
-        //             query: this.searchMovies,
-        //             language: 'it',
-        //         }
-        //     })
+        //     if (this.searchMovies.trim()) {
+        //         axios.get('https://api.themoviedb.org/3/search/tv', {
+        //             params: {
+        //                 api_key: '5a579e747faf09425e97ffffa6a21111',
+        //                 query: this.searchMovies,
+        //                 language: 'it',
+        //             }
+        //         })
         //
-        //     .then((element) =>{
-        //         console.log(element);
-        //         this.allMovies = element.data.results;
-        //         console.log(this.allMovies);
-        //         this.isLoading = true;
+        //         .then((element) =>{
+        //             console.log(element);
+        //             this.allMovies = element.data.results;
+        //             console.log(this.allMovies);
+        //             this.isLoad = true;
         //
-        //         this.searchMovies = '';
+        //             this.searchMovies = '';
         //
         //
-        //         this.allMovies.forEach((item) => {
-        //         item.vote_average = Math.ceil(item.vote_average / 2);
-        //         // console.log(item.vote_average);
+        //             this.allMovies.forEach((item) => {
+        //                 item.vote_average = Math.ceil(item.vote_average / 2);
+        //                 // console.log(item.vote_average);
         //
-        //         });
-        //     })
+        //             });
+        //         })
+        //     }
         // },
 
     },

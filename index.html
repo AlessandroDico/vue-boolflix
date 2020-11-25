@@ -13,9 +13,9 @@
     <body>
 
         <div id="root">
+<!--___________INIZIO HEADER________-->
             <header>
                 <div class="logo-container">
-                    <!-- <img src="" alt=""> -->
                     <p>BOOLFLIX</p>
                 </div>
                 <div class="search-bar">
@@ -24,8 +24,18 @@
                     <button type="button" @click="getMovies()">Search</button>
                 </div>
             </header>
+
+<!-- _______TITOLI/ISTRUZIONI PER L'UTENTE______ -->
+            <div class="search-state">
+                <h3 v-if="isLoad == false && isWaiting == false">cerca il tuo film preferito</h3>
+                <h2 v-if="isLoad == true && isWaiting == false">{{ allMovies.length }} Risultati per la ricerca "{{searchResoluts}}"</h2>
+
+                <h2 v-if="isWaiting == true">Sto cercando..</h2>
+            </div>
+
+<!-- ___________CARDS FILM / SERIE___________ -->
             <div class="movies-container">
-                <ul v-for="movie in allMovies" v-if="isLoading == true"
+                <ul v-for="movie in allMovies" v-if="isLoad == true"
                     class="movie-card">
                     <li>
                         {{movie.title}}
@@ -41,8 +51,7 @@
                     <li v-else class="flags-container">
                         {{movie.original_language}}
                     </li>
-
-
+                <!-- ___stelline__ -->
                     <li v-for="(item, index) in numberStars"
                         class="align-self">
                         <i class="far fa-star" :class="item <= movie.vote_average? 'fas' : 'far'"></i>
