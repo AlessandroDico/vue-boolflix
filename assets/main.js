@@ -62,7 +62,7 @@ var app = new Vue ({
                     this.searchMovies = '';
 
                     this.allMovies.forEach((item) => {
-                        console.log(item.vote_average);
+                        // console.log(item.vote_average);
                         item.vote_average = Math.ceil(item.vote_average / 2);
                     });
 

@@ -38,6 +38,13 @@
                 <ul v-for="movie in allMovies" v-if="isLoad == true"
                     class="movie-card">
                     <li>
+                        <img :src="'https://image.tmdb.org/t/p/' + 'w185' + movie.poster_path" alt="">
+                    </li>
+                    <li class="null-image"
+                    v-if="movie.poster_path == null">
+                        <img src="images/null.jpg" alt="">
+                    </li>
+                    <li>
                         {{movie.title}}
                         {{movie.name}}
                     </li>
