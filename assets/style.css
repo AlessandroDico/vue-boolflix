@@ -177,17 +177,15 @@ ul.movie-card {
     margin: 20px;
     color: #fff;
     font-size: 20px;
-    /* text-align: center; */
     border: 1px solid #e50614;
     cursor: pointer;
 }
 
-
+/* INIZIO PARTE PER ANIMAZIONE CARD ON HOVER */
 .both-faces-container {
     width: 100%;
     height: 100%;
     position: relative;
-    /* text-align: center; */
     transition: transform 0.6s;
     transform-style: preserve-3d;
 }
@@ -244,7 +242,7 @@ ul.movie-card {
     height: 100%;
 }
 
-/* INIZIO STILIZZAZIONE BANDIERINE */
+/*--------STILIZZAZIONE BANDIERINE ------------*/
 
 div.flags-container {
     height: 20px;

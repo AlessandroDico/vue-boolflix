@@ -1,3 +1,5 @@
+const url_base = 'https://api.themoviedb.org/3';
+const my_key = '5a579e747faf09425e97ffffa6a21111';
 var app = new Vue ({
     el:'#root',
     data: {
@@ -27,16 +29,16 @@ var app = new Vue ({
                 this.isWaiting = true;
 
                 axios.all([
-                    axios.get('https://api.themoviedb.org/3/search/movie', {
+                    axios.get(url_base + '/search/movie', {
                         params: {
-                            api_key: '5a579e747faf09425e97ffffa6a21111',
+                            api_key: my_key,
                             query: this.searchMovies,
                             language: 'it',
                         },
                     }),
-                    axios.get('https://api.themoviedb.org/3/search/tv', {
+                    axios.get(url_base + '/search/tv', {
                         params: {
-                            api_key: '5a579e747faf09425e97ffffa6a21111',
+                            api_key: my_key,
                             query: this.searchMovies,
                             language: 'it',
                         },
