@@ -83,25 +83,38 @@
                         </div>
                         <div class="back-face-card">
                             <p>
+                                Titolo:
                                 {{movie.title? movie.title : movie.name}}
-                                <!-- {{movie.name}} -->
                             </p>
-                            <p>
+                            <p v-if="movie.original_title != movie.title || movie.original_name != movie.name">
+                                Titolo originale:
                                 {{movie.original_title? movie.original_title : movie.original_name}}
-                                <!-- {{movie.original_name}} -->
                             </p>
+
+                            <span>Lingua: </span>
                             <div class="flags-container"
                             v-if="languages.includes(movie.original_language)">
                                 <img :src="'images/' + movie.original_language + '.jpg'" :alt="movie.original_language">
                             </div>
                             <div v-else class="flags-container">
+                                Lingua:
                                 {{movie.original_language}}
                             </div>
                             <!-- ___stelline__ -->
-                            <div v-for="(item, index) in numberStars"
-                                class="stars-container">
-                                <i class="fa-star" :class="item <= movie.vote_average? 'fas' : 'far'"></i>
+                            <div class="vote-container">
+                                <span>Voto:</span>
+                                <div v-for="(item, index) in numberStars"
+                                    class="stars-container">
+                                    <i class="fa-star" :class="item <= movie.vote_average? 'fas' : 'far'"></i>
+                                </div>
                             </div>
+                            <p v-if="movie.overview">
+                                Trama:
+                                {{movie.overview}}
+                            </p>
+                            <p v-else>
+                                Trama non disponibile
+                            </p>
                         </div>
                     </li>
                 </ul>
