@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title></title>
+        <title>Boolflix</title>
         <link rel="shortcut icon" href="https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2016.ico">
         <link rel="stylesheet" href="assets/style.css">
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
@@ -16,13 +16,48 @@
         <div id="root">
 <!--___________INIZIO HEADER________-->
             <header>
-                <div class="logo-container">
-                    <img src="images/logo.png" alt="">
+            <!-- PARTE SINISTRA DELL' HEADER -->
+                <div class="header-left">
+                    <div class="logo-container">
+                        <img src="images/logo.png" alt="">
+                    </div>
+                    <div class="menu-left-header">
+                        <ul>
+                            <li>
+                                <a class="active" href="#">Home</a>
+                            </li>
+                            <li>
+                                <a href="#">Serie Tv</a>
+                            </li>
+                            <li>
+                                <a href="#">Film</a>
+                            </li>
+                            <li>
+                                <a href="#">Popolari</a>
+                            </li>
+                            <li>
+                                <a href="#">La mia lista</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="search-bar">
-                    <input type="text" v-model="searchMovies" @keyup.enter="getMovies()"
-                    placeholder="cerca un film">
-                    <button type="button" @click="getMovies()">Search</button>
+        <!-- PARTE DESTRA DELL' HEADER -->
+                <div class="header-right">
+                    <div class="search-bar">
+                        <input type="text" v-model="searchMovies" @keyup.enter="getMovies()"
+                        placeholder="cerca un film">
+                        <div class="icon-search-container">
+                            <i @click="getMovies()" class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="for-user-right-header">
+                        <i class="fas fa-gift"></i>
+                        <i class="fas fa-bell"></i>
+                        <div> <!--MOMENTANEO-->
+
+                            <i class="fas fa-sort-down"></i>
+                        </div>
+                    </div>
                 </div>
             </header>
 
@@ -48,12 +83,12 @@
                         </div>
                         <div class="back-face-card">
                             <p>
-                                {{movie.title}}
-                                {{movie.name}}
+                                {{movie.title? movie.title : movie.name}}
+                                <!-- {{movie.name}} -->
                             </p>
                             <p>
-                                {{movie.original_title}}
-                                {{movie.original_name}}
+                                {{movie.original_title? movie.original_title : movie.original_name}}
+                                <!-- {{movie.original_name}} -->
                             </p>
                             <div class="flags-container"
                             v-if="languages.includes(movie.original_language)">
@@ -64,8 +99,8 @@
                             </div>
                             <!-- ___stelline__ -->
                             <div v-for="(item, index) in numberStars"
-                                class="align-self">
-                                <i class="far fa-star" :class="item <= movie.vote_average? 'fas' : 'far'"></i>
+                                class="stars-container">
+                                <i class="fa-star" :class="item <= movie.vote_average? 'fas' : 'far'"></i>
                             </div>
                         </div>
                     </li>

@@ -8,6 +8,10 @@ ul {
     list-style-type: none;
 }
 
+a {
+    text-decoration: none;
+}
+
 body {
     background-color: #141414;
     font-family: 'Roboto', sans-serif;
@@ -22,6 +26,13 @@ header {
     align-items: center;
 }
 
+/* _______________LEFT HEADER_____________ */
+.header-left {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
 .logo-container {
     margin-left: 35px;
     width: 150px;
@@ -29,7 +40,38 @@ header {
 
 .logo-container > img {
     width: 100%;
-    /* height: 100%; */
+}
+
+.menu-left-header {
+    margin-left: 20px;
+}
+
+.menu-left-header > ul {
+    display: flex;
+}
+
+.menu-left-header > ul > li {
+    margin: 0 10px;
+}
+
+.menu-left-header > ul > li > a {
+    color: #d1d1d1;
+}
+
+.menu-left-header > ul > li > a:hover {
+    color: #fff;
+}
+
+.menu-left-header > ul > li > a.active {
+    font-weight: bold;
+    color: #fff;
+}
+
+/* ___________RIGHT HEADER_______ */
+.header-right {
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .search-bar {
@@ -37,25 +79,64 @@ header {
     justify-content: center;
     align-items: center;
     margin-right: 25px;
+    border-radius: 5px;
+    border: 2px solid #fff;
+    height: 30px;
 }
 
 .search-bar input {
     width: 250px;
-    height: 30px;
+    height: 100%;
     outline: none;
-    border-radius: 5px;
     font-size: 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: black;
+    color: #fff;
+    padding-left: 10px;
 }
 
-.search-bar button {
-    width: 80px;
-    height: 30px;
-    outline: none;
-    border-radius: 5px;
-    font-size: 20px;
-    background-color: #b0873c;
+.icon-search-container{
+    height: 100%;
+    width: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+i.fa-search {
     color: #fff;
-    margin-left: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.for-user-right-header {
+    display: flex;
+    align-items: center;
+}
+
+.for-user-right-header > i {
+    color: #fff;
+    font-size: 28px;
+    margin: 0 20px;
+    cursor: pointer;
+}
+
+.for-user-right-header > div {
+    width: 35px;
+    height: 35px;
+    background-color: lightblue;
+    margin: 0 50px 0 20px;
+    border-radius: 4px;
+    position: relative;
+}
+
+i.fa-sort-down {
+    position: absolute;
+    right: -20px;
+    top: 5px;
+    color: #fff;
+    cursor: pointer;
 }
 /* -----------FINE HEADER------------- */
 
@@ -84,12 +165,62 @@ header {
     flex-wrap: wrap;
 }
 
-.align-self {
+ul.movie-card {
+    width: 342px;
+    height: 500px;
+    perspective: 4000px;
+    margin: 20px;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    border: 2px solid #e50614;
+    cursor: pointer;
+}
+
+
+.both-faces-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.movie-card:hover .both-faces-container {
+  transform: rotateY(180deg);
+}
+
+.front-face-card, .back-face-card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.back-face-card {
+  background-color: #393939;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+.first-img {
+    width: 100%;
+    height: 100%;
+}
+
+.first-img > img {
+    width: 100%;
+    height: 100%;
+}
+
+.stars-container {
     display: inline-block;
     margin: 0 5px;
 }
 
-.align-self > i {
+.stars-container > i {
     margin: 0 5px;
 }
 
@@ -106,79 +237,18 @@ header {
 
 /* INIZIO STILIZZAZIONE BANDIERINE */
 
-/* li.flags-container {
-    height: 30px;
-    width: 45px;
-    margin: auto;
-} */
-
-.flags-container > img {
-    height: 100%;
-    width: 100%;
-}
-
-/* MODIFICHE PER FLIPPARE LA CARD */
-
-ul.movie-card {
-    width: 342px;
-    height: 500px;
-    perspective: 1000px;
-    background-color: #284478;
-    margin: 20px;
-    /* padding: 15px; */
-    color: #fff;
-    font-size: 20px;
-    text-align: center;
-}
-
 div.flags-container {
     height: 30px;
     width: 45px;
     margin: auto;
 }
 
-.both-faces-container {
-    width: 100%;
+.flags-container > img {
     height: 100%;
-    position: relative;
-    text-align: center;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    background-color: blue;
-}
-
-.movie-card:hover .both-faces-container {
-  transform: rotateY(180deg);
-}
-
-.front-face-card, .back-face-card {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-.front-face-card {
-  background-color: #bbb;
-  color: black;
-}
-
-.back-face-card {
-  background-color: #2980b9;
-  color: white;
-  transform: rotateY(180deg);
-}
-
-.first-img {
     width: 100%;
-    height: 100%;
 }
 
-.first-img > img {
-    width: 100%;
-    height: 100%;
-}
+
 
 
 
