@@ -38,31 +38,36 @@
             <div class="movies-container">
                 <ul v-for="movie in allMovies" v-if="isLoad == true"
                     class="movie-card">
-                    <li>
-                        <img :src="'https://image.tmdb.org/t/p/' + 'w185' + movie.poster_path" alt="">
-                    </li>
-                    <li class="null-image"
-                    v-if="movie.poster_path == null">
-                        <img src="images/null.jpg" alt="">
-                    </li>
-                    <li>
-                        {{movie.title}}
-                        {{movie.name}}
-                    </li>
-                    <li>
-                        {{movie.original_title}}
-                        {{movie.original_name}}
-                    </li>
-                    <li class="flags-container" v-if="languages.includes(movie.original_language)">
-                        <img :src="'images/' + movie.original_language + '.jpg'" alt="movie.original_language">
-                    </li>
-                    <li v-else class="flags-container">
-                        {{movie.original_language}}
-                    </li>
-                <!-- ___stelline__ -->
-                    <li v-for="(item, index) in numberStars"
-                        class="align-self">
-                        <i class="far fa-star" :class="item <= movie.vote_average? 'fas' : 'far'"></i>
+                    <li class="both-faces-container">
+                        <div class="front-face-card">
+                            <div class="first-img">
+                                <img v-if="movie.poster_path == null"
+                                src="images/null.jpg" alt="">
+                                <img v-else :src="'https://image.tmdb.org/t/p/' + 'w342' + movie.poster_path" alt="">
+                            </div>
+                        </div>
+                        <div class="back-face-card">
+                            <p>
+                                {{movie.title}}
+                                {{movie.name}}
+                            </p>
+                            <p>
+                                {{movie.original_title}}
+                                {{movie.original_name}}
+                            </p>
+                            <div class="flags-container"
+                            v-if="languages.includes(movie.original_language)">
+                                <img :src="'images/' + movie.original_language + '.jpg'" :alt="movie.original_language">
+                            </div>
+                            <div v-else class="flags-container">
+                                {{movie.original_language}}
+                            </div>
+                            <!-- ___stelline__ -->
+                            <div v-for="(item, index) in numberStars"
+                                class="align-self">
+                                <i class="far fa-star" :class="item <= movie.vote_average? 'fas' : 'far'"></i>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>
