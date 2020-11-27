@@ -173,7 +173,7 @@ i.fa-sort-down {
 ul.movie-card {
     width: 342px;
     height: 500px;
-    perspective: 4000px;
+    perspective: 4000px; /*serve per fargli effetto 3D quando gira*/
     margin: 20px;
     color: #fff;
     font-size: 20px;

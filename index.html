@@ -85,7 +85,7 @@
                             <div class="first-img">
                                 <img v-if="movie.poster_path == null"
                                 src="images/null.jpg" alt="">
-                                <img v-else :src="'https://image.tmdb.org/t/p/' + 'w342' + movie.poster_path" alt="">
+                                <img v-else :src="'https://image.tmdb.org/t/p/' + 'w342' + movie.poster_path" :alt="movie.title? movie.title : movie.name">
                             </div>
                         </div>
 
@@ -113,9 +113,9 @@
                         <!-- ___stelline__ -->
                             <div class="vote-container">
                                 <span>Voto:</span>
-                                <div v-for="(item, index) in numberStars"
+                                <div v-for="item in numberStars"
                                     class="stars-container">
-                                    <i class="fa-star" :class="item <= movie.vote_average? 'fas' : 'far'"></i>
+                                    <i class="fa-star" :class="item <= getHalfVote(movie.vote_average)? 'fas' : 'far'"></i>
                                 </div>
                             </div>
                         <!-- ___fine stelline__ -->
