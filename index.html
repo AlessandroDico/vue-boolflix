@@ -128,6 +128,15 @@
                             <p v-else>
                                 Trama non disponibile
                             </p>
+
+                        <!-- stampa attori sul retro della card -->
+                            <div class="movie-actors" v-for="actor in castMovies">
+                                {{actor.id_film == movie.id ? actor.name : ''}}
+                            </div>
+                            <div class="series-actors" v-for="actor in castSeries">
+                                {{actor.id_tv == movie.id ? actor.name : ''}}
+                            </div>
+
                         </div>
                     </li>
                 </ul>

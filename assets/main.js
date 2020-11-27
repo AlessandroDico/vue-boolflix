@@ -20,6 +20,8 @@ var app = new Vue ({
             'ja',
             'pt'
         ],
+        castMovies: [],
+        castSeries: [],
     },
     methods: {
 // FUNZIONE PER FARE CHIAMATA AJAX DEI FILM
@@ -27,6 +29,11 @@ var app = new Vue ({
         getMovies(){
             if (this.searchMovies.trim())  {
                 this.isWaiting = true;
+
+                // svuoto l'array prima di "ririempirlo"
+                this.allMovies = [];
+                this.castMovies = [];
+                this.castSeries = [];
 
                 axios.all([
                     axios.get(url_base + '/search/movie', {
@@ -45,14 +52,9 @@ var app = new Vue ({
                     })
                 ])
                 .then(axios.spread((film_el, series_el) => {
-                    // console.log(film_el.data);
-                    // console.log(series_el.data);
 
                     this.movies = film_el.data.results;
                     this.series = series_el.data.results;
-
-                    // console.log(this.movies);
-                    // console.log(this.series);
 
                     this.allMovies = [...this.series, ...this.movies]; //new
                     console.log(this.allMovies);
@@ -63,12 +65,52 @@ var app = new Vue ({
 
                     this.searchMovies = '';
 
-                    // this.allMovies.forEach((item) => {
-                    //     // console.log(item.vote_average);
-                    //     item.vote_average = Math.ceil(item.vote_average / 2);
-                    // });
-
                     this.isWaiting = false;
+
+//CHIAMATA PER ATTORI DEI FILM
+                this.movies.forEach((item, index) => {
+
+                    axios.get(url_base + '/movie/' + item.id + '/credits', {
+                        params:{
+                            api_key: my_key,
+                        }
+                    })
+                    .then((results) => {
+                        var id_movie = item.id;
+                    //results.data.cast è un array.. lo ciclo per aggiungere ad un suo elemento(che sarà un oggetto) una chiave/valore con l'id del film corrente in modo da poterlo paragonare poi nel Html all'id di allMovies
+                        results.data.cast.forEach((elemento, indice) => {
+                            elemento.id_film = id_movie;
+                        });
+
+                    // console.log(results.data.cast);
+                    //aggiungo all'array castMovies gli elementi di results.data.cast aggiornati con la chiave/valore id_film = id_movie
+                        this.castMovies = [...this.castMovies, ...results.data.cast];
+                    })
+                });
+
+// CHIAMATA PER ATTORI DELLE SERIE
+
+                this.series.forEach((item, index) => {
+
+                    axios.get(url_base + '/tv/' + item.id + '/credits', {
+                        params:{
+                            api_key: my_key,
+                        }
+                    })
+                    .then((results) => {
+                        var id_series = item.id;
+
+                    //results.data.cast è un array.. lo ciclo per aggiungere ad un suo elemento(che sarà un oggetto) una chiave/valore con l'id della serie corrente in modo da poterlo paragonare poi nel Html all'id di allMovies
+                        results.data.cast.forEach((elemento, indice) => {
+                            elemento.id_tv = id_series;
+                        });
+
+                    //aggiungo all'array castSeries gli elementi di results.data.cast aggiornati con la chiave/valore id_tv = id_series
+                        this.castSeries = [...this.castSeries, ...results.data.cast];
+
+                    })
+                });
+
                 })) // fine then
             }
 
