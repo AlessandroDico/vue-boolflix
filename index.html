@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Boolflix</title>
+        <title>Newflix</title>
         <link rel="shortcut icon" href="https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2016.ico">
         <link rel="stylesheet" href="assets/style.css">
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+        <!-- for responsive -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
 
@@ -23,20 +25,14 @@
                     </div>
                     <div class="menu-left-header">
                         <ul>
-                            <li>
-                                <a class="active" href="#">Home</a>
+                            <li @click="getHomeFromButton()">
+                                <a :class="homeActive ? 'active' : ''" href="#">Home</a>
                             </li>
-                            <li>
-                                <a href="#">Serie Tv</a>
+                            <li @click="getSeriesFromButton()">
+                                <a :class="seriesActive ? 'active' : ''" href="#">Serie Tv</a>
                             </li>
-                            <li>
-                                <a href="#">Film</a>
-                            </li>
-                            <li>
-                                <a href="#">Popolari</a>
-                            </li>
-                            <li>
-                                <a href="#">La mia lista</a>
+                            <li @click="getMoviesFromButton()">
+                                <a :class="moviesActive ? 'active' : ''" href="#">Film</a>
                             </li>
                         </ul>
                     </div>
@@ -45,7 +41,7 @@
                 <div class="header-right">
                     <div class="search-bar">
                         <input type="text" v-model="searchMovies" @keyup.enter="getMovies()"
-                        placeholder="cerca un film">
+                        placeholder="cerca un film o una serie">
                         <div class="icon-search-container">
                             <i @click="getMovies()" class="fas fa-search"></i>
                         </div>
@@ -54,16 +50,32 @@
                         <i class="fas fa-gift"></i>
                         <i class="fas fa-bell"></i>
                         <div> <!--MOMENTANEO-->
-
+                            <img class="user-face" src="https://occ-0-2943-778.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABTYctxxbe-UkKEdlMxXm4FVGD6DqTHkQ0TQ5CQJ9jbOMnG0CYxYcSICcTUQz8DrB7CpKUGpqJVMtEqksLlvSJx2ac3Ak.png?r=a41" alt="">
                             <i class="fas fa-sort-down"></i>
                         </div>
+                        <i @click="showHiddenMenu()" class="fas fa-bars">
+                            <div v-if="hiddenMenu" class="hiddenMenu">
+                                <ul>
+                                    <li @click="getHomeFromButton()">
+                                        <a :class="homeActive ? 'active' : ''" href="#">Home</a>
+                                    </li>
+                                    <li @click="getSeriesFromButton()">
+                                        <a :class="seriesActive ? 'active' : ''" href="#">Serie Tv</a>
+                                    </li>
+                                    <li @click="getMoviesFromButton()">
+                                        <a :class="moviesActive ? 'active' : ''" href="#">Film</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </i>
                     </div>
                 </div>
             </header>
-
 <!-- _______TITOLI/ISTRUZIONI PER L'UTENTE______ -->
             <div class="search-state">
-                <h3 v-if="isLoad == false && isWaiting == false">cosa vuoi vedere oggi?</h3>
+                <h3 v-if="isLoad == false && isWaiting == false && homeActive">cosa vuoi vedere oggi?</h3>
+                <h3 v-if="isLoad == false && isWaiting == false && seriesActive">Le serie Tv più popolari</h3>
+                <h3 v-if="isLoad == false && isWaiting == false && moviesActive">I film più popolari</h3>
                 <h2 v-if="isLoad == true && isWaiting == false && allMovies.length > 1">
                     {{ allMovies.length }} Risultati per la ricerca "{{searchResoluts}}"</h2>
                 <h2 v-if="isLoad == true && isWaiting == false && allMovies.length == 1">
@@ -76,7 +88,7 @@
 
 <!-- ___________CARDS FILM / SERIE___________ -->
             <div class="movies-container">
-                <ul v-for="movie in allMovies" v-if="isLoad == true"
+                <ul v-for="(movie, index) in allMovies" v-if="isLoad == true"
                     class="movie-card">
                     <li class="both-faces-container">
 
@@ -91,27 +103,31 @@
 
                     <!-- parte dietro della card -->
                         <div class="back-face-card">
-                            <p>
+                            <p class="border-bottom">
                                 Titolo:
                                 {{movie.title? movie.title : movie.name}}
                             </p>
-                            <p v-if="movie.original_title != movie.title || movie.original_name != movie.name">
+                            <p class="border-bottom"
+                                v-if="movie.original_title != movie.title || movie.original_name != movie.name">
                                 Titolo originale:
                                 {{movie.original_title? movie.original_title : movie.original_name}}
                             </p>
 
-                        <!-- lingua -->
-                            <span>Lingua: </span>
-                            <div class="flags-container"
-                            v-if="languages.includes(movie.original_language)">
-                                <img :src="'images/' + movie.original_language + '.jpg'" :alt="movie.original_language">
+                            <!-- lingua -->
+                            <div class="language-container border-bottom">
+                                <span>Lingua: </span>
+                                <div class="flags-container"
+                                    v-if="languages.includes(movie.original_language)">
+                                    <img :src="'images/' + movie.original_language + '.jpg'" :alt="movie.original_language">
+                                </div>
+                                <div v-else class="flags-container">
+                                    <!-- Lingua: -->
+                                    {{movie.original_language}}
+                                </div>
+
                             </div>
-                            <div v-else class="flags-container">
-                                Lingua:
-                                {{movie.original_language}}
-                            </div>
-                        <!-- ___stelline__ -->
-                            <div class="vote-container">
+                            <!-- ___stelline__ -->
+                            <div class="vote-container border-bottom">
                                 <span>Voto:</span>
                                 <div v-for="item in numberStars"
                                     class="stars-container">
@@ -121,25 +137,112 @@
                         <!-- ___fine stelline__ -->
 
                         <!-- recensione -->
-                            <p v-if="movie.overview">
-                                Trama:
+                            <p v-if="movie.overview" class="border-bottom">
+                                <span class="overview-span">Trama :</span>
                                 {{movie.overview}}
                             </p>
-                            <p v-else>
+                            <p v-else class="border-bottom">
                                 Trama non disponibile
                             </p>
 
                         <!-- stampa attori sul retro della card -->
+                            <div v-if="castMovies">
+                                <span class="overview-span">Cast :</span>
+                            </div>
                             <div class="movie-actors" v-for="actor in castMovies">
                                 {{actor.id_film == movie.id ? actor.name : ''}}
                             </div>
                             <div class="series-actors" v-for="actor in castSeries">
                                 {{actor.id_tv == movie.id ? actor.name : ''}}
                             </div>
-
+                            <div class="trailer-button" v-for="trailerM in trailerMovies" v-if="trailerM.includes(movie.id)">
+                                <div class="movies-trailerM">
+                                    <iframe allowfullscreen :src="'https://www.youtube.com/embed/' + trailerM.replace(movie.id,'')"></iframe>
+                                </div>
+                            </div>
+                            <div class="trailer-button" v-for="trailerS in trailerSeries" v-if="trailerS.includes(movie.id)">
+                                <div class="movies-trailerS">
+                                    <iframe allowfullscreen :src="'https://www.youtube.com/embed/' + trailerS.replace(movie.id,'')"></iframe>
+                                </div>
+                            </div>
                         </div>
                     </li>
                 </ul>
+                <div v-if="isLoad == false" class="popular-container">
+                    <!-- <h2>I più popolari su Boolflix</h2> -->
+                    <div class="movies-container">
+                        <ul v-for="movie in popularMovies" class="movie-card">
+                            <li class="both-faces-container">
+
+                            <!-- parte davanti della card -->
+                                <div class="front-face-card">
+                                    <div class="first-img">
+                                        <img v-if="movie.poster_path == null"
+                                        src="images/null.jpg" alt="">
+                                        <img v-else :src="'https://image.tmdb.org/t/p/' + 'w342' + movie.poster_path" :alt="movie.title? movie.title : movie.name">
+                                    </div>
+                                </div>
+
+                            <!-- parte dietro della card -->
+                                <div class="back-face-card">
+                                    <p class="border-bottom">
+                                        Titolo:
+                                        {{movie.title? movie.title : movie.name}}
+                                    </p>
+                                    <p class="border-bottom"
+                                        v-if="movie.original_title != movie.title || movie.original_name != movie.name">
+                                        Titolo originale:
+                                        {{movie.original_title? movie.original_title : movie.original_name}}
+                                    </p>
+
+                                <!-- lingua -->
+                                <div class="language-container border-bottom">
+                                    <span>Lingua: </span>
+                                    <div class="flags-container"
+                                        v-if="languages.includes(movie.original_language)">
+                                        <img :src="'images/' + movie.original_language + '.jpg'" :alt="movie.original_language">
+                                    </div>
+                                    <div v-else class="flags-container">
+                                        <!-- Lingua: -->
+                                        {{movie.original_language}}
+                                    </div>
+
+                                </div>
+                                <!-- ___stelline__ -->
+                                    <div class="vote-container border-bottom">
+                                        <span>Voto:</span>
+                                        <div v-for="item in numberStars"
+                                            class="stars-container">
+                                            <i class="fa-star" :class="item <= getHalfVote(movie.vote_average)? 'fas' : 'far'"></i>
+                                        </div>
+                                    </div>
+                                <!-- ___fine stelline__ -->
+
+                                <!-- recensione -->
+                                    <p v-if="movie.overview" class="border-bottom">
+                                        <span class="overview-span">Trama :</span>
+                                        {{movie.overview}}
+                                    </p>
+                                    <p v-else class="border-bottom">
+                                        Trama non disponibile
+                                    </p>
+
+                                <!-- stampa attori sul retro della card -->
+                                    <div v-if="castMovies">
+                                        <span class="overview-span">Cast :</span>
+                                    </div>
+                                    <div class="movie-actors" v-for="actor in castMovies">
+                                        {{actor.id_film == movie.id ? actor.name : ''}}
+                                    </div>
+                                    <div class="series-actors" v-for="actor in castSeries">
+                                        {{actor.id_tv == movie.id ? actor.name : ''}}
+                                    </div>
+
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
 

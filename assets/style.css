@@ -18,6 +18,41 @@ body {
 }
 
 /* ----------FINE REGOLE GENERICHE-------- */
+/*----------- HAMBURGER MENU ---------------*/
+i.fa-bars {
+  display: none;
+  position: relative;
+}
+
+div.hiddenMenu {
+    width: 95px;
+    position: absolute;
+    top: 40px;
+    right: -10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    background-color: #393939;
+}
+
+div.hiddenMenu > ul > li {
+    margin: 10px 0;
+}
+
+div.hiddenMenu > ul > li > a {
+    color: #d1d1d1;
+}
+
+div.hiddenMenu > ul > li > a:hover {
+    color: #fff;
+}
+
+div.hiddenMenu > ul > li > a.active {
+    font-weight: bold;
+    color: #fff;
+}
+/*----------- FINE HAMBURGER MENU ---------------*/
+
+
 header {
     height: 70px;
     background-color: #141414;
@@ -131,6 +166,10 @@ i.fa-search {
     position: relative;
 }
 
+img.user-face {
+    width: 100%;
+}
+
 i.fa-sort-down {
     position: absolute;
     right: -20px;
@@ -148,7 +187,7 @@ i.fa-sort-down {
     color: #fff;
 }
 
-.search-state > h3{
+.search-state > h3, .popular-container > h2{
     text-align: center;
     font-size: 40px;
     color: #fff;
@@ -157,7 +196,7 @@ i.fa-sort-down {
 
 /* ------CONTAINER DELLE CARDS--------- */
 .movies-container {
-    max-width: 1500px;
+    /* max-width: 1500px; */
     margin: auto;
     display: flex;
     justify-content: center;
@@ -179,6 +218,16 @@ ul.movie-card {
     font-size: 20px;
     border: 1px solid #e50614;
     cursor: pointer;
+    text-align: center;
+}
+
+.border-bottom {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #fff;
+}
+
+.overview-span {
+    display: block;
 }
 
 /* INIZIO PARTE PER ANIMAZIONE CARD ON HOVER */
@@ -208,8 +257,9 @@ ul.movie-card {
   background-color: #393939;
   color: white;
   transform: rotateY(180deg);
-  padding: 20px;
+  padding: 10px;
   overflow-y: auto;
+  transition: transform .2s;
 }
 
 .first-img {
@@ -229,6 +279,7 @@ ul.movie-card {
 
 .stars-container > i {
     margin: 0 5px;
+    color: #ecdf06;
 }
 
 .null-image {
@@ -257,10 +308,89 @@ div.flags-container {
 }
 
 
+/* width */
+li.both-faces-container ::-webkit-scrollbar {
+  width: 8px;
+  margin-right: 8px;
+  height: 30px;
+  border: solid 3px transparent;
 
+}
 
+/* Track */
 
+li.both-faces-container ::-webkit-scrollbar {
+    width: 10px;
+}
 
+li.both-faces-container ::-webkit-scrollbar-track {
+    background-color: #393939;
+}
+
+li.both-faces-container ::-webkit-scrollbar-thumb {
+    background-color: #e50614;
+    border-right: 5px #393939 solid;
+}
+
+/*-------MEDIA-----*/
+@media only screen and (max-width: 992px) {
+    .search-state > h3 {
+        font-size: 30px;
+    }
+
+    div.menu-left-header {
+        display: none;
+    }
+
+    i.fa-gift, i.fa-bell {
+    display: none;
+    }
+
+    i.fa-bars {
+    display: block;
+    margin: 10px;
+    }
+
+    .movies-container {
+        padding-top: 50px;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+    .header-left {
+        padding: 10px 0;
+    }
+
+    header {
+        height: 110px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    div.hiddenMenu {
+        right: -50px;
+    }
+
+    .search-bar input {
+        width: 220px;
+    }
+
+    .for-user-right-header > div {
+        margin: 0 30px 0 10px;
+    }
+
+    .search-bar {
+        margin-right: 10px;
+    }
+
+}
+
+@media only screen and (max-width: 400px) {
+    .search-bar input {
+        width: 180px;
+    }
+}
 
 
 
